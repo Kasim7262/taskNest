@@ -28,7 +28,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
     descriptionController.text = widget.task.description;
   }
 
-  void updateTask() async {
+  Future<void> updateTask() async {
 
     TaskModel updatedTask = TaskModel(
       id: widget.task.id,

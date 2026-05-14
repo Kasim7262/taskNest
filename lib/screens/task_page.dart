@@ -17,20 +17,29 @@ class _TaskPageState extends State<TaskPage> {
 
   final FirestoreService firestoreService = FirestoreService();
 
-  void addTask() async {
-    String currentDate = DateFormat('dd MMM yyyy').format(DateTime.now());
+  Future<void> addTask() async {
+    String currentDate =
+    DateTime.now().millisecondsSinceEpoch.toString();
 
-    TaskModel task = TaskModel(
+    try {
+
+      TaskModel task = TaskModel(
         id: '',
         title: titleController.text,
         description: descriptionController.text,
         date: currentDate,
         isCompleted: false,
-    );
+      );
 
-    await firestoreService.addTask(task);
+      await firestoreService.addTask(task);
 
-    Navigator.pop(context);
+      Navigator.pop(context);
+      // Navigator.of(context).pop();
+    } catch (e) {
+
+      print(e);
+    }
+
   }
 
   @override

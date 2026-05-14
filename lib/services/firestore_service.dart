@@ -21,4 +21,13 @@ class FirestoreService {
     await tasks.doc(id).delete();
   }
 
+  Future<void> updateTaskStatus(String id, bool value) async {
+    await FirebaseFirestore.instance
+        .collection('tasks')
+        .doc(id)
+        .update({
+      'isCompleted': value,
+    });
+  }
+
 }
