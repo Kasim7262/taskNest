@@ -96,38 +96,63 @@ class _HomePageState extends State<HomePage> {
 
                   var tasks = snapshot.data!.docs;
 
-                  return ListView.builder(
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) {
-                      var taskData = tasks[index];
+                  return tasks.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: tasks.length,
+                          itemBuilder: (context, index) {
+                            var taskData = tasks[index];
 
-                      TaskModel task = TaskModel.fromMap(
-                        taskData.data() as Map<String, dynamic>,
-                        taskData.id,
-                      );
+                            TaskModel task = TaskModel.fromMap(
+                              taskData.data() as Map<String, dynamic>,
+                              taskData.id,
+                            );
 
-                      return TaskTile(
-                        task: task,
-                        onDelete: () async {
-                          await firestoreService.deleteTask(task.id);
-                        },
-                        onEdit: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditTaskPage(task: task),
-                            ),
-                          );
-                        },
-                        onToggle: (value) {
-                          firestoreService.updateTaskStatus(
-                            task.id,
-                            value ?? false,
-                          );
-                        },
-                      );
-                    },
-                  );
+                            return TaskTile(
+                              task: task,
+                              onDelete: () async {
+                                await firestoreService.deleteTask(task.id);
+                              },
+                              onEdit: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditTaskPage(task: task),
+                                  ),
+                                );
+                              },
+                              onToggle: (value) {
+                                firestoreService.updateTaskStatus(
+                                  task.id,
+                                  value ?? false,
+                                );
+                              },
+                            );
+                          },
+                        )
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.task_alt,
+                                size: 80,
+                                color: Colors.grey,
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                "No Tasks Yet",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Text("Tap + to create your first task"),
+                            ],
+                          ),
+                        );
+                  ;
                 },
               ),
             ),
@@ -139,9 +164,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const TaskPage(),
-            ),
+            MaterialPageRoute(builder: (_) => const TaskPage()),
           );
         },
         child: const Icon(Icons.add),
