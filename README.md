@@ -1,74 +1,53 @@
 # TaskNest Flutter App
 
-A simple and beginner-friendly Task Manager application built using Flutter and Firebase.
+A clean and beginner-friendly task management application built using Flutter and Firebase.
 
-This project was designed with:
+TaskNest allows users to create, update, complete, and delete tasks with real-time Firestore synchronization and Firebase Authentication support.
 
-* Clean UI
-* Simple architecture
-* Beginner-friendly logic
-* Firebase Authentication
-* Cloud Firestore
-* Quote API integration
-* Modern modal bottom sheet task creation flow
+---
 
-The project is optimized for:
+## Features
 
-* macOS development
-* MacBook Air
-* Android Studio
-* iOS Simulator
+### Authentication
+- User Signup
+- User Login
+- Persistent Login Session
+- Logout Functionality
+
+### Task Management
+- Add Tasks
+- Update Tasks
+- Delete Tasks
+- Mark Tasks as Completed
+- Real-time Firestore Updates
+- Automatic Task Timestamp Storage
+
+### UI & UX
+- Clean Minimal UI
+- Responsive Layouts
+- Reusable Widgets
+- Empty State Handling
+
+### Quote Integration
+- Displays motivational quotes using the ZenQuotes API
 
 ---
 
 # Tech Stack
 
 ## Frontend
-
 * Flutter
 * Dart
 
 ## Backend
-
 * Firebase Authentication
 * Cloud Firestore
 
 ## API
-
 * ZenQuotes API
 
 ---
 
-# Features
-
-## Authentication
-
-* User Signup
-* User Login
-* Persistent Login Session
-* Logout
-
-## Task Management
-
-* Add Task
-* Update Task
-* Delete Task
-* Real-time Firestore updates
-* Automatic task creation date
-
-## UI Features
-
-* Modal Bottom Sheet task creation
-* Clean minimal UI
-* Reusable widgets
-* Responsive layouts
-
-## Quote Feature
-
-* Fetches motivational quote from API
-* Displays quote on Home Screen
-
----
 
 # Project Structure
 
@@ -101,72 +80,39 @@ lib/
 ```
 
 ---
+## Firebase Setup 
 
-# Firebase Setup
+This project uses Firebase for:
 
-## Step 1 — Create Firebase Project
+* Authentication
+* Cloud Firestore
 
-Open:
+Configure Firebase using the FlutterFire CLI before running the project.
 
-[https://console.firebase.google.com](https://console.firebase.google.com)
-
-Create a new Firebase project.
-
----
-
-## Step 2 — Install Firebase CLI
-
-Run:
-
-```bash
-npm install -g firebase-tools
-```
+Firebase configuration files are excluded from version control.
 
 ---
 
-## Step 3 — Login to Firebase
+## Firebase Configuration
 
-```bash
-firebase login
-```
+This project uses Firebase Authentication and Cloud Firestore.
 
-Recommended options:
+To configure Firebase:
 
-* Gemini in Firebase → No
-* Analytics/Error Reporting → Yes or No (optional)
-
----
-
-## Step 4 — Install FlutterFire CLI
+1. Create a Firebase project
+2. Enable:
+    - Firebase Authentication
+    - Cloud Firestore
+3. Configure the project using FlutterFire CLI:
 
 ```bash
 dart pub global activate flutterfire_cli
-```
 
----
-
-## Step 5 — Configure Firebase
-
-Inside project terminal:
-
-```bash
 flutterfire configure
-```
 
-Select:
+This generates the required:
 
-* Android
-* iOS
-* macOS (optional)
-
-This generates:
-
-```text
 firebase_options.dart
-```
-
-IMPORTANT:
-Do not delete this file.
 
 ---
 
@@ -180,28 +126,17 @@ Install packages using terminal.
 flutter pub add firebase_core
 ```
 
-## Firebase Auth
+## Firebase Auth , Cloud Firestore
 
 ```bash
-flutter pub add firebase_auth
+flutter pub add firebase_auth cloud_firestore
 ```
 
-## Cloud Firestore
+## HTTP Package , Intl Package
 
 ```bash
-flutter pub add cloud_firestore
-```
+flutter pub add http intl
 
-## HTTP Package
-
-```bash
-flutter pub add http
-```
-
-## Intl Package
-
-```bash
-flutter pub add intl
 ```
 
 ---
@@ -297,58 +232,29 @@ until logout is performed.
 
 ---
 
-# Firestore Flow
+## Firestore Flow
 
-## Add Task
+### Add Task
 
-Task object is converted into Map:
+Creates and stores task documents in Firestore.
 
-```dart
-task.toMap()
-```
+### Update Task
 
-Saved using:
+Updates existing task data using document IDs.
 
-```dart
-tasks.add(task.toMap())
-```
+### Delete Task
 
----
+Removes tasks from Firestore.
 
-## Update Task
+### Task Status
 
-Uses document ID:
-
-```dart
-tasks.doc(id).update(task.toMap())
-```
+Supports real-time completion status updates.
 
 ---
 
-## Delete Task
+## Task Date Handling
 
-```dart
-tasks.doc(id).delete()
-```
-
----
-
-# Task Date Logic
-
-Task date is automatically generated during task creation.
-
-Example:
-
-```dart
-String currentDate =
-    DateFormat('dd MMM yyyy - hh:mm a')
-        .format(DateTime.now());
-```
-
-IMPORTANT:
-Date is generated only once during task creation.
-
-It is then stored permanently in Firestore.
+Task creation timestamps are generated once during task creation and stored permanently in Firestore using epoch milliseconds.
 
 ---
 
@@ -380,208 +286,6 @@ data['a']
 
 ---
 
-# Modal Bottom Sheet Flow
-
-Instead of opening a new screen directly:
-
-```dart
-Navigator.push()
-```
-
-The app uses:
-
-```dart
-showModalBottomSheet()
-```
-
-The entire `AddTaskScreen` UI is rendered inside the modal.
-
-Benefits:
-
-* Cleaner UI
-* Modern UX
-* Less navigation complexity
-* Faster interactions
-
----
-
-# GitHub Setup
-
-## Initialize Git
-
-```bash
-git init
-```
-
----
-
-## Add Files
-
-```bash
-git add .
-```
-
----
-
-## First Commit
-
-```bash
-git commit -m "Initial TaskNest setup"
-```
-
----
-
-# Recommended Git Commit Flow
-
-## After Firebase Setup
-
-```bash
-git commit -m "Configured Firebase"
-```
-
-## After Authentication
-
-```bash
-git commit -m "Added Firebase authentication"
-```
-
-## After Firestore CRUD
-
-```bash
-git commit -m "Implemented Firestore task CRUD"
-```
-
-## After Quote API
-
-```bash
-git commit -m "Added motivational quote API"
-```
-
-## After UI Completion
-
-```bash
-git commit -m "Completed TaskNest UI"
-```
-
----
-
-# Push to GitHub
-
-## Create GitHub Repository
-
-Open:
-
-[https://github.com](https://github.com)
-
-Create new repository.
-
----
-
-## Connect Repository
-
-```bash
-git remote add origin YOUR_GITHUB_REPO_LINK
-```
-
----
-
-## Push Code
-
-```bash
-git branch -M main
-
-git push -u origin main
-```
-
----
-
-# Deployment Notes
-
-Before deployment:
-
-## iOS
-
-Open:
-
-```text
-ios/Runner.xcworkspace
-```
-
-inside Xcode.
-
-Set:
-
-* Signing Team
-* Bundle Identifier
-
----
-
-# Common Errors
-
-## Firebase.initializeApp Error
-
-Error:
-
-```text
-No Firebase App '[DEFAULT]' has been created
-```
-
-Fix:
-
-```dart
-await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
-```
-
----
-
-## SSL Certificate Error
-
-Error:
-
-```text
-CERTIFICATE_VERIFY_FAILED
-```
-
-Fix:
-
-Use:
-
-```text
-https://zenquotes.io/api/random
-```
-
-instead of older quote APIs.
-
----
-
-## Navigator.pop Not Working
-
-Ensure:
-
-* screen opened using `Navigator.push()`
-* async flow completes properly
-* correct BuildContext used
-
----
-
-# Learning Concepts Covered
-
-This project teaches:
-
-* Flutter Widgets
-* StatefulWidget
-* Navigation
-* Modal Bottom Sheets
-* Firebase Authentication
-* Firestore CRUD
-* API Integration
-* Async/Await
-* JSON Parsing
-* Reusable Widgets
-* MVC-like Folder Structure
-* Git & GitHub Workflow
 
 ---
 
