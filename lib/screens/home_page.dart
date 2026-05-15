@@ -66,6 +66,8 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
                       width: double.infinity,
@@ -137,7 +139,9 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const TaskPage()),
+            MaterialPageRoute(
+              builder: (_) => const TaskPage(),
+            ),
           );
         },
         child: const Icon(Icons.add),

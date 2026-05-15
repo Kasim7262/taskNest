@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:tasknest/models/task_model.dart';
 import 'package:tasknest/services/firestore_service.dart';
 
@@ -14,12 +13,13 @@ class _TaskPageState extends State<TaskPage> {
 
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
+  String currentDate =
+  DateTime.now().millisecondsSinceEpoch.toString();
 
   final FirestoreService firestoreService = FirestoreService();
 
   Future<void> addTask() async {
-    String currentDate =
-    DateTime.now().millisecondsSinceEpoch.toString();
+
 
     try {
 
@@ -27,17 +27,18 @@ class _TaskPageState extends State<TaskPage> {
         id: '',
         title: titleController.text,
         description: descriptionController.text,
-        date: currentDate,
+        createdAt: currentDate,
         isCompleted: false,
       );
 
       await firestoreService.addTask(task);
 
+      if (!mounted) return;
+
       Navigator.pop(context);
       // Navigator.of(context).pop();
     } catch (e) {
-
-      print(e);
+      debugPrint(e.toString());
     }
 
   }
@@ -76,7 +77,9 @@ class _TaskPageState extends State<TaskPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: addTask,
+                  onPressed: () async {
+                    await addTask();
+                  },
                   child: Text('Add Task'),
                 ),
               ),

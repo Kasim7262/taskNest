@@ -21,7 +21,6 @@ class _EditTaskPageState extends State<EditTaskPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     titleController.text = widget.task.title;
@@ -34,7 +33,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
       id: widget.task.id,
       title: titleController.text,
       description: descriptionController.text,
-      date: widget.task.date,
+      createdAt: widget.task.createdAt,
       isCompleted: widget.task.isCompleted,
     );
 

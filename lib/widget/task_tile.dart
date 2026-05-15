@@ -42,7 +42,7 @@ class TaskTile extends StatelessWidget {
             Text(
                 DateFormat('EEE, dd MMM • hh:mm a').format(
                   DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(task.date),
+                    int.parse(task.createdAt.toString()),
                   ),
                 ),
               style: TextStyle(

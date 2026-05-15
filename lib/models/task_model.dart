@@ -2,14 +2,14 @@ class TaskModel {
   String id;
   String title;
   String description;
-  String date;
+  String createdAt;
   bool isCompleted;
 
   TaskModel({
     required this.id,
     required this.title,
     required this.description,
-    required this.date,
+    required this.createdAt,
     required this.isCompleted,
   });
 
@@ -17,7 +17,7 @@ class TaskModel {
     return {
       'title': title,
       'description': description,
-      'date': date,
+      'createdAt': createdAt,
       'isCompleted': isCompleted,
     };
   }
@@ -27,7 +27,7 @@ class TaskModel {
       id: id,
       title: map['title'],
       description: map['description'],
-      date: DateTime.now().millisecondsSinceEpoch.toString(),
+      createdAt: map['createdAt'],
       isCompleted: map['isCompleted'],
     );
   }
