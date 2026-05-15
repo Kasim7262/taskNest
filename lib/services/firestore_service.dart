@@ -5,29 +5,47 @@ class FirestoreService {
 
   final CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
 
-  Future<void> addTask(TaskModel task) async {
-    await tasks.add(task.toMap());
+  Future<bool> addTask(TaskModel task) async {
+    try{
+      await tasks.add(task.toMap());
+      return true;
+    } catch(e) {
+      return false;
+    }
   }
 
   Stream<QuerySnapshot> getTasks(){
     return tasks.snapshots();
   }
 
-  Future<void> updateTask(String id, TaskModel task) async {
-    await tasks.doc(id).update(task.toMap());
+  Future<bool> updateTask(String id, TaskModel task) async {
+    try{
+      await tasks.doc(id).update(task.toMap());
+      return true;
+    } catch(e){
+      return false;
+    }
   }
 
   Future<void> deleteTask(String id) async {
     await tasks.doc(id).delete();
   }
 
-  Future<void> updateTaskStatus(String id, bool value) async {
-    await FirebaseFirestore.instance
-        .collection('tasks')
-        .doc(id)
-        .update({
-      'isCompleted': value,
-    });
+  Future<bool> updateTaskStatus(String id, bool value) async {
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('tasks')
+          .doc(id)
+          .update({
+        'isCompleted': value,
+      });
+      return true;
+
+    } catch (e) {
+
+      return false;
+    }
   }
 
 }

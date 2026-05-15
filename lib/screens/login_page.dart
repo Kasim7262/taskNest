@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tasknest/screens/home_page.dart';
 import 'package:tasknest/screens/signup_page.dart';
 import 'package:tasknest/services/auth_service.dart';
+import 'package:tasknest/widget/custom_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -53,25 +54,12 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                hintText: "Email",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
+            CustomTextField(controller: emailController, hint: 'Email'),
             SizedBox(height: 11),
-            TextField(
+            CustomTextField(
               controller: passwordController,
+              hint: 'Password',
               obscureText: true,
-              decoration: InputDecoration(
-                hintText: "password",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
             ),
             SizedBox(height: 11),
             isLoading

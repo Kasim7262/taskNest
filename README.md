@@ -89,10 +89,12 @@ lib/
 │   ├── home_page.dart
 │   ├── login_page.dart
 │   ├── signup_page.dart
-│   └── add_task_screen.dart
+│   ├── task_page.dart
+│   ├── edit_task_page.dart
+│   └── splash_page.dart
 │
 ├── widgets/
-│   ├── custom_button.dart
+│   ├── task_tile.dart
 │   └── custom_textfield.dart
 │
 └── firebase_options.dart
@@ -204,36 +206,6 @@ flutter pub add intl
 
 ---
 
-# Firestore Rules
-
-Open:
-
-Firebase Console → Firestore Database → Rules
-
-Use this during development:
-
-```js
-rules_version = '2';
-
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    match /{document=**} {
-      allow read, write: if true;
-    }
-  }
-}
-```
-
-Click:
-
-Publish
-
-IMPORTANT:
-This is only for development/testing.
-
----
-
 # Running the App
 
 ## Clean Project
@@ -274,17 +246,54 @@ Uses:
 FirebaseAuth.instance.signInWithEmailAndPassword()
 ```
 
+
 ## Persistent Login
 
-Inside `main.dart`:
+The app uses a dedicated Splash Screen to handle login persistence.
 
-```dart
-home: FirebaseAuth.instance.currentUser != null
-    ? const HomePage()
-    : const LoginPage(),
+Flow:
+
+```text
+App Starts
+   ↓
+Splash Screen Opens
+   ↓
+Checks FirebaseAuth.instance.currentUser
+   ↓
+If user exists → HomePage
+If user does not exist → LoginPage
 ```
 
-This keeps users logged in after rebuild/restart.
+Example logic used inside Splash Screen:
+
+```dart
+User? user = FirebaseAuth.instance.currentUser;
+
+if (user != null) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const HomePage(),
+    ),
+  );
+} else {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const LoginPage(),
+    ),
+  );
+}
+```
+
+This keeps users logged in even after:
+
+* Hot Restart
+* App Restart
+* Rebuilds
+
+until logout is performed.
+
 
 ---
 
